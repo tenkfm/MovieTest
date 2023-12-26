@@ -1,0 +1,15 @@
+//
+//  DEBUG.xcconfig
+//  Movies
+//
+//  Created by Anton Rogachevskyi on 26/12/2023.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+MOVIE_DB_BASE_URL = https:/$()/api.themoviedb.org
+
+MOVIE_DB_IMAGE_URL = https:/$()image.tmdb.org
+
+MOVIE_DB_AUTH_TOKN = eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkYzQyZTdmYWZiNjcyZWM3NDhkODEzYTUxMGY0NzU1NiIsInN1YiI6IjY1ODE4ZTk4Y2VkYWM0MDgyNzdkZmM4OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.0z_ykAyLEhv1wShJD5beskG0NXFLjFAsEUDVf_LQCkc

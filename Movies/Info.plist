@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MOVIE_DB_AUTH_TOKN</key>
+	<string>$(MOVIE_DB_AUTH_TOKN)</string>
+	<key>MOVIE_DB_BASE_URL</key>
+	<string>$(MOVIE_DB_BASE_URL)</string>
+	<key>MOVIE_DB_IMAGE_URL</key>
+	<string>$(MOVIE_DB_IMAGE_URL)</string>
+</dict>
+</plist>
