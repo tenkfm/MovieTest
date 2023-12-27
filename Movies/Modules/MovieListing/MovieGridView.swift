@@ -37,7 +37,6 @@ struct MovieGridView: View {
                                 router.push(.details(id: movie.id))
                             } label: {
                                 MovieGridItemView(movie: movie)
-                                    .frame(height: 200, alignment: .center)
                                     .background(Color.black)
                                     .task {
                                         if viewModel.hasReachedPageEnd(of: movie) {

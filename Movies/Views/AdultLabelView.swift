@@ -14,7 +14,7 @@ struct AdultLabelView: View {
             .foregroundStyle(.white)
             .padding(.vertical, 4)
             .padding(.horizontal, 4)
-            .background(Color("nc17"))
+            .background(R.color.nc17.color)
             .clipShape(RoundedRectangle(cornerRadius: 4))
     }
 }

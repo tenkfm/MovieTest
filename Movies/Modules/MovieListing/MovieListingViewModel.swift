@@ -24,6 +24,11 @@ class MovieListingViewModel: ObservableObject, NetworkViewModel {
         } else {
             self.payload = payload
         }
+        
+        // For some reason MovieDB returns duplicated IDs. I filter it to ensure smooth List behaviour
+        if let payload = self.payload {
+            self.payload?.results = payload.results.uniqued()
+        }
     }
     
     private var isNextPageLoading: Bool = false

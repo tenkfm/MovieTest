@@ -38,7 +38,7 @@ struct MovieDetailsView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                     } placeholder: {
-                        Image("MoviePlaceholder")
+                        R.image.moviePlaceholder.image
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                     }

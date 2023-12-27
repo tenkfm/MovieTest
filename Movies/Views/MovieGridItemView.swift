@@ -17,12 +17,10 @@ struct MovieGridItemView: View {
             image
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(height: 200)
         } placeholder: {
             Image("MoviePlaceholder")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(height: 200)
         }
         .overlay(alignment: .bottom) {
             HStack {
