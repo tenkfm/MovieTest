@@ -12,9 +12,20 @@ struct LoadingView: View {
     let message: String
     
     var body: some View {
-        VStack {
+        
+        VStack(alignment: .center, spacing: 20) {
+            Spacer()
+            
             ProgressView()
-            Text(message)
+                .progressViewStyle(CircularProgressViewStyle(tint: Color.white))
+            HStack {
+                Spacer()
+                Text(message)
+                    .foregroundStyle(.white)
+                Spacer()
+            }
+            Spacer()
         }
+        .padding()
     }
 }

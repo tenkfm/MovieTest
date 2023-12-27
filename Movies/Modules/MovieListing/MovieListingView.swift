@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct MovieListingView: View {
-    @ObservedObject var viewModel = MovieListingViewModel()
+    @EnvironmentObject var router: MovieListingNavigation.Router
+    @StateObject var viewModel = MovieListingViewModel()
     
     var body: some View {
         VStack {
-            viewModel.resource.isLoading() {
+            viewModel.networkState.isLoading {
                 Group  {
                     Spacer()
                     LoadingView(message: "Loading movies")
@@ -20,14 +21,19 @@ struct MovieListingView: View {
                 }
             }
 
-            viewModel.resource.hasError() {
+            viewModel.networkState.hasError {
                 ErrorView(error: $0)
             }
 
-            viewModel.resource.hasResource() { payload in
+            viewModel.networkState.hasResource {
                 List {
-                    ForEach(payload.results) { movie in
-                        MovieView(movie: movie)
+                    ForEach(viewModel.payload?.results ?? []) { movie in
+                        Button {
+                            router.push(.details(id: movie.id))
+                        } label: {
+                            MovieView(movie: movie)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
             }

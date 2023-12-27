@@ -8,6 +8,10 @@
 import Foundation
 
 struct MovieDBNetwork: Network {
-    var decoder: JSONDecoder = JSONDecoder()
+    var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(DateFormatter.yyMMdd)
+        return decoder
+    }
     var environment: NetworkEnvironment = MovieDBNetworkEnvironment()
 }

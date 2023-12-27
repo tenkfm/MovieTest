@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct MovieGridView: View {
-    @ObservedObject var viewModel = MovieListingViewModel()
+    @EnvironmentObject var router: MovieListingNavigation.Router
+    @StateObject var viewModel = MovieListingViewModel()
     
     private let adaptiveColumn = [
         GridItem(.adaptive(minimum: 100))
@@ -16,7 +17,7 @@ struct MovieGridView: View {
     
     var body: some View {
         VStack {
-            viewModel.resource.isLoading() {
+            viewModel.networkState.isLoading {
                 Group  {
                     Spacer()
                     LoadingView(message: "Loading movies")
@@ -24,24 +25,27 @@ struct MovieGridView: View {
                 }
             }
             
-            viewModel.resource.hasError() {
+            viewModel.networkState.hasError {
                 ErrorView(error: $0)
             }
             
-            viewModel.resource.hasResource() { payload in
+            viewModel.networkState.hasResource {
                 ScrollView {
                     LazyVGrid(columns: adaptiveColumn, spacing: 0) {
-                        ForEach(payload.results) { movie in
-                            MovieGridItemView(movie: movie)
-                                .frame(height: 200, alignment: .center)
-                                .background(Color.black)
-                            
-                            //                        Text(String(item))
-                            //                            .frame(width: 150, height: 150, alignment: .center)
-                            //                            .background(.blue)
-                            //                            .cornerRadius(10)
-                            //                            .foregroundColor(.white)
-                            //                            .font(.title)
+                        ForEach(viewModel.payload?.results ?? []) { movie in
+                            Button {
+                                router.push(.details(id: movie.id))
+                            } label: {
+                                MovieGridItemView(movie: movie)
+                                    .frame(height: 200, alignment: .center)
+                                    .background(Color.black)
+                                    .task {
+                                        if viewModel.hasReachedPageEnd(of: movie) {
+                                            viewModel.fetchNextPage()
+                                        }
+                                    }
+                            }
+                            .buttonStyle(.plain)
                         }
                     }
                 }
@@ -49,6 +53,13 @@ struct MovieGridView: View {
         }
         .background(Color.black)
         .onAppear(perform: viewModel.onAppear)
+        .toolbar {
+            Button(action: {
+                viewModel.refresh()
+            }, label: {
+                Image(systemName: "arrow.clockwise")
+            })
+        }
     }
 }
 

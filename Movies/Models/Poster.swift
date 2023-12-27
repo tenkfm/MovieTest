@@ -11,6 +11,7 @@ enum Poster: String {
     case h50
     case h100
     case w200
+    case w500
     
     func url(path: String) -> URL? {
         URL(string: [Environment.movieDBImageURL.absoluteString, "t", "p", self.rawValue, path].joined(separator: "/"))

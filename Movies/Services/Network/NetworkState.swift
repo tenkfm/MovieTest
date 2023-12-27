@@ -1,5 +1,5 @@
 //
-//  Resource.swift
+//  NetworkState.swift
 //  Movies
 //
 //  Created by Anton Rogachevskyi on 26/12/2023.
@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-enum Resource<T> {
+enum NetworkState {
     case loading
-    case success(T)
+    case success
     case error(Error)
 }
 
-extension Resource {
+extension NetworkState {
     var loading: Bool {
         if case .loading = self {
             return true
@@ -30,26 +30,25 @@ extension Resource {
             return nil
         }
     }
-
-    var value: T? {
-        switch self {
-        case .success(let value):
-            return value
-        default:
-            return nil
+    
+    var success: Bool {
+        if case .success = self {
+            return true
         }
+        
+        return false
     }
 }
 
-extension Resource {
-    func transform<S>(_ t: @escaping (T) -> S) -> Resource<S> {
+extension NetworkState {
+    func transform(_ t: @escaping () -> NetworkState) -> NetworkState {
         switch self {
         case .loading:
             return .loading
         case .error(let error):
             return .error(error)
-        case .success(let value):
-            return .success(t(value))
+        case .success:
+            return .success
         }
     }
 
@@ -62,9 +61,9 @@ extension Resource {
         return nil
     }
 
-    func hasResource<Content: View>(@ViewBuilder content: @escaping (T) -> Content) -> Content? {
-        if let value = value {
-            return content(value)
+    func hasResource<Content: View>(@ViewBuilder content: @escaping () -> Content) -> Content? {
+        if success {
+            return content()
         }
 
         return nil

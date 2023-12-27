@@ -9,14 +9,13 @@ import Foundation
 import Combine
 
 protocol Network {
-    var decoder: JSONDecoder { get set }
+    var decoder: JSONDecoder { get }
     var environment: NetworkEnvironment { get set }
 }
 
 extension Network {
-
-    func fetch<T: Decodable>(route: NetworkRoute) -> AnyPublisher<T, Error> {
-        let request = route.create(for: environment)
+    func fetch<T: Decodable>(route: NetworkRoute) throws -> AnyPublisher<T, Error> {
+        let request = try route.create(for: environment)
 
         return URLSession.shared
             .dataTaskPublisher(for: request)
